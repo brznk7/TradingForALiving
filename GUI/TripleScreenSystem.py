@@ -12,6 +12,7 @@ def TripleScreenSystem(StockData,StockName,\
     import numpy as np
     from MACD_New import MACD
     from Stochastic import Stochastic
+    from OnBalanceVolume import OnBalanceVolume
     from matplotlib import pyplot as plt
     plt.close('all')
 
@@ -30,50 +31,43 @@ def TripleScreenSystem(StockData,StockName,\
     DataDaily = StockData[StockName].loc[Stoch_StartDate:Stoch_StopDate]
     FastStoc,SlowStock = Stochastic(DataDaily,Stoch_PlotFlag)
     
+    ## On Balance Volume
+    OBV = OnBalanceVolume(DataDaily)
     
-    
-    ## PLOT MACD
-    Dates = DataWeekly.index.values
-    Closes = DataWeekly['Close'].values
-    from matplotlib import pyplot as plt
-    
-    fig,axs = plt.subplots(nrows=3, sharex=True)
-    axs[0].plot(Dates,Closes,label='Close')
+    ## PLOT
+    DatesDaily = DataDaily.index.values
+    ClosesDaily = DataDaily['Close'].values
+    DatesWeekly = DataWeekly.index.values
+    fig,axs = plt.subplots(nrows=5, sharex=True)
+    ## Daily Closes   
+    axs[0].plot(DatesDaily,ClosesDaily,label='Daily Close')
     axs[0].grid()
     axs[0].legend()
-    axs[0].title.set_text('Weekly MACD')
-
-    axs[1].plot(Dates[25:],Macd,label='Fast Line')
-    axs[1].plot(Dates[33:],Signal[8:],label='Signal Line')
+    ## PLOT MACD
+    axs[1].plot(DatesWeekly[25:],Macd,label='Weekly MACD Fast Line')
+    axs[1].plot(DatesWeekly[33:],Signal[8:],label='Weekly MACD Signal Line')
     axs[1].grid()
     axs[1].legend()
 
-    axs[2].bar(Dates[33:],Histogram[8:],label = 'MACD Histogram')
+    axs[2].bar(DatesWeekly[33:],Histogram[8:],label = 'Weekly MACD Histogram')
     axs[2].grid()
     axs[2].legend()
-    ## Set figure position and size
-    mngr = plt.get_current_fig_manager()
-    mngr.window.setGeometry(250,50,1000, 300)
-    ## PLOT STOCHASTIC
-    Dates = DataDaily.index.values
-    Closes = DataDaily['Close'].values
-    fig,axs = plt.subplots(nrows=2, sharex=True)
-    axs[0].plot(Dates,Closes,label='Close')
-    axs[0].grid()
-    axs[0].legend()
-    axs[0].title.set_text('Daily Stochastic')
-    
-    axs[1].plot(Dates[Dates.size-FastStoc.size:],FastStoc,label='%D Fast')
-    axs[1].plot(Dates[Dates.size-SlowStock.size:],SlowStock,label='%D Slow')
-    axs[1].grid()
-    axs[1].legend()
-    axs[1].axhline(y=80, color='k')
-    axs[1].axhline(y=20, color='k')
-    axs[1].set_ylim(0,100)
+    ## PLOT OBV
+    axs[3].plot(DatesDaily[DatesDaily.size-OBV.size:],OBV,label='OBV')
+    axs[3].grid()
+    axs[3].legend()
+    ## PLOT STOCHASTICS
+    axs[4].plot(DatesDaily[DatesDaily.size-FastStoc.size:],FastStoc,label='%K Fast')
+    axs[4].plot(DatesDaily[DatesDaily.size-SlowStock.size:],SlowStock,label='%D Slow')
+    axs[4].grid()
+    axs[4].legend()
+    axs[4].axhline(y=80, color='k')
+    axs[4].axhline(y=20, color='k')
+    axs[4].set_ylim(0,100)
     
     ## Set figure position and size
     mngr = plt.get_current_fig_manager()
-    mngr.window.setGeometry(250,400,1000, 300)
+    mngr.window.setGeometry(250,100,1000,600)
     
     return Macd,Signal,Histogram,FastStoc,SlowStock
     

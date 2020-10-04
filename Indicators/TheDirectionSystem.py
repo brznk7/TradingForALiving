@@ -10,8 +10,8 @@ import datetime as dt
 from ExponentialMovingAverage import EMA_Simple,SMA
 import numpy as np
 
-CompanyNames = pnd.read_pickle('CompanyNames.pkl')
-StockData = pnd.read_pickle('CompanyDataUpdated.pkl')
+CompanyNames = pnd.read_pickle(r'C:\Users\Dell\Documents\GitHub\TradingForALiving\CompanyNames.pkl')
+StockData = pnd.read_pickle(r'C:\Users\Dell\Documents\GitHub\TradingForALiving\CompanyDataDaily.pkl')
 
 SelectedCompany = 'AEFES'
 StartDate = dt.datetime(2019,8,7)
