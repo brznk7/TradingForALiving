@@ -11,12 +11,12 @@ import datetime as dt
 from ExponentialMovingAverage import EMA_Simple
 from matplotlib import pyplot as plt
 
-CompanyNames = pnd.read_pickle('CompanyNames.pkl')
-StockData = pnd.read_pickle('CompanyDataUpdated.pkl')
+CompanyNames = pnd.read_pickle(r'C:\Users\Dell\Documents\GitHub\TradingForALiving\CompanyNames.pkl')
+StockData = pnd.read_pickle(r'C:\Users\Dell\Documents\GitHub\TradingForALiving\CompanyDataDaily.pkl')
 
-SelectedCompany = 'AEFES'
+SelectedCompany = 'ARCLK'
 StartDate = dt.datetime(2019,8,7)
-StopDate = dt.datetime(2020,8,7)
+StopDate = dt.date.today()
 
 Data = StockData[SelectedCompany]
 Dates = Data[StartDate:StopDate].index.values
