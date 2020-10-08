@@ -12,10 +12,10 @@ import pandas as pnd
 
 StockData = pnd.read_pickle(r'C:\Users\Dell\Documents\GitHub\TradingForALiving\CompanyDataDaily.pkl')
 StockNames = pnd.read_pickle(r'C:\Users\Dell\Documents\GitHub\TradingForALiving\CompanyNamesBIST100.pkl')
-MACD_StartDate = dt.datetime(2018,9,14)
+MACD_StartDate = dt.datetime(2019,7,14)
 MACD_StopDate = dt.date.today()
 
-Stoch_StartDate = dt.datetime(2018,9,14)
+Stoch_StartDate = dt.datetime(2019,7,14)
 Stoch_StopDate = dt.date.today()
 
 MACD_PlotFlag = 0
